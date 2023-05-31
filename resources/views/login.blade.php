@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'Registration')
+@section('title', 'Login')
 @section('content')
 <div class="container">
     <div class="mt-5">

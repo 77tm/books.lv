@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthManager;
+use App\Http\Controllers\BookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +16,7 @@ use App\Http\Controllers\AuthManager;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 })->name('home');
 
 Route::get('/login', [AuthManager::class, 'login'])->name('login');
@@ -31,3 +32,18 @@ Route::group(['middleware' => 'auth'], function () {
         return "Hi";
     });
 });
+
+Route::get('/book_new', function () {
+    return view('book_new');
+})->name('book_new');
+
+Route::post('/book_new', [BookController::class, 'store'])->name('books.store');
+
+Route::get('/books', function () {
+    return view('books');
+});
+
+// Route::get('/books', 'BookController@index')->name('books');
+
+
+Route::resource('books', BookController::class);
