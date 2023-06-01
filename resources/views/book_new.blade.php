@@ -36,10 +36,13 @@ book page
         <input type="text" name="language" id="language">
     </div>
 
-    <div>
-        <label for="genre">Genre:</label>
-        <input type="text" name="genre" id="genre">
-    </div>
+    <select name="genre">
+        @foreach ($genres as $genre)
+        <option value="{{ $genre->id }}">{{ $genre->name }}</option>
+        @endforeach
+    </select>
+
+
 
     <div>
         <label for="photo">Photo:</label>

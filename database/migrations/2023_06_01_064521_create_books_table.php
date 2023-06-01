@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description');
             $table->integer('page_count')->nullable();
             $table->string('language')->nullable();
-            $table->string('genre')->nullable();
+            $table->unsignedBigInteger('genre_id');
             $table->string('photo')->nullable();
             $table->timestamps();
         });

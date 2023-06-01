@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthManager;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,17 +34,25 @@ Route::group(['middleware' => 'auth'], function () {
     });
 });
 
-Route::get('/book_new', function () {
-    return view('book_new');
-})->name('book_new');
+
+
+Route::get('/book_new', [BookController::class, 'create'])->name('book_new');
 
 Route::post('/book_new', [BookController::class, 'store'])->name('books.store');
 
+
+
+
 Route::get('/books', function () {
     return view('books');
-});
-
-// Route::get('/books', 'BookController@index')->name('books');
-
+})->name('books.index');
 
 Route::resource('books', BookController::class);
+
+
+Route::post('/review_new', [ReviewController::class, 'store'])->name('review_new');
+Route::get('/review_new', [ReviewController::class, 'create'])->name('review_new');
+
+
+Route::resource('reviews', ReviewController::class);
+Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews');

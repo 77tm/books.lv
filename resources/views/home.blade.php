@@ -1,5 +1,5 @@
 @extends('layout')
 @section('title', "Home")
 @section('content')
-<h1>Hello</h1>
+<h1>Home page</h1>
 @endsection

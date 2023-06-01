@@ -13,6 +13,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('logout')}}">Logout</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('book_new')}}">Add a book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('books.index')}}">Books</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('review_new')}}">Add a review</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('reviews')}}">Reviews</a>
+                </li>
                 @else
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('login')}}">Login</a>
@@ -20,10 +32,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('registration')}}">Registration</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('book_new')}}">Add a book</a>
-                </li>
-
                 @endauth
 
             </ul>

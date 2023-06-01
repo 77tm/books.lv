@@ -19,7 +19,7 @@
         @foreach ($books as $book)
         <li>
             {{ $book->name }} - {{ $book->author }} - {{ $book->release_year }} - {{ $book->description }} - {{ $book->page_count }}
-            - {{ $book->language }} - {{ $book->genre }} - <img src="{{ $book->photo }}" alt="Book Photo">
+            - {{ $book->language }} - {{ $book->genre->name }} - <img src="{{ $book->photo }}" alt="Book Photo">
 
         </li>
         @endforeach

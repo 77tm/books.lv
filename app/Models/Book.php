@@ -9,12 +9,17 @@ class Book extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name', 'author', 'release_year', 'description', 'page_count', 'language', 'genre', 'photo'
+        'name', 'author', 'release_year', 'description', 'page_count', 'language', 'genre_id', 'photo'
     ];
 
 
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function genre()
+    {
+        return $this->belongsTo(Genre::class);
     }
 }

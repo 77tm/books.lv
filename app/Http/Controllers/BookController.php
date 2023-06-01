@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use App\Models\Genre;
 
 class BookController extends Controller
 {
@@ -14,6 +15,13 @@ class BookController extends Controller
         $books = Book::all();
         return view('books', compact('books'));
     }
+
+    public function create()
+    {
+        $genres = Genre::all();
+        return view('book_new', compact('genres'));
+    }
+
 
     public function store(Request $request)
     {
@@ -33,33 +41,10 @@ class BookController extends Controller
         $book->description = $request->input('description');
         $book->page_count = $request->input('page_count');
         $book->language = $request->input('language');
-        $book->genre = $request->input('genre');
+        $book->genre_id = $request->input('genre');
         $book->photo = $request->input('photo');
         $book->save();
-        // return view('books');
         $books = Book::all();
         return view('books', compact('books'));
-        // $photoUrl = '';
-
-        // if ($request->hasFile('photo')) {
-        //     $photoPath = $request->file('photo')->store('photos', 'uploads');
-        //     $validatedData['photo'] = $photoPath;
-        // }
-
-        // Save the book to the database
-        // $book = Book::create($validatedData);
-
-
-
-
-        // Retrieve the public URL for the photo
-        // if (isset($book->photo)) {
-        //     $photoUrl = asset('uploads/' . $book->photo);
-        // }
-
-        #to perform a redirect back, we need country code from ID
-        // $country = Country::findOrFail($request->country_id);
-        // $action = action([ManufacturerController::class, 'index'], ['countryslug' => $country->code]);
-        // return redirect($action);
     }
 }
