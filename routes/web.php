@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthManager;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ReadingListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,18 +36,11 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 
-
 Route::get('/book_new', [BookController::class, 'create'])->name('book_new');
-
 Route::post('/book_new', [BookController::class, 'store'])->name('books.store');
-
-
-
-
 Route::get('/books', function () {
     return view('books');
 })->name('books.index');
-
 Route::resource('books', BookController::class);
 
 
@@ -56,3 +50,18 @@ Route::get('/review_new', [ReviewController::class, 'create'])->name('review_new
 
 Route::resource('reviews', ReviewController::class);
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews');
+
+
+Route::get('/reading_list_new', [ReadingListController::class, 'create'])->name('reading_list_new');
+Route::post('/reading_list_new', [ReadingListController::class, 'store'])->name('reading_list.store');
+
+Route::resource('reading_lists', ReadingListController::class);
+Route::get('/reading_lists', [ReadingListController::class, 'index'])->name('reading_lists');
+
+Route::get('/reading_lists/{reading_list}', [ReadingListController::class, 'show'])->name('reading_lists.show');
+
+
+Route::get('/reading_lists/{reading_list}/books/create', [ReadingListController::class, 'createBook'])
+    ->name('reading_list.books_add_list');
+
+Route::post('/reading_list/{reading_list}/books', [ReadingListController::class, 'storeBook'])->name('reading_list.books.store');

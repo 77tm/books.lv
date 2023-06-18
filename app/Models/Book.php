@@ -22,4 +22,9 @@ class Book extends Model
     {
         return $this->belongsTo(Genre::class);
     }
+
+    public function readingLists()
+    {
+        return $this->belongsToMany(ReadingList::class, 'reading_list_books');
+    }
 }

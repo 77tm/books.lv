@@ -25,6 +25,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('reviews')}}">Reviews</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('reading_list_new')}}">New reading list</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('reading_lists')}}">Reading lists</a>
+                </li>
                 @else
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('login')}}">Login</a>
