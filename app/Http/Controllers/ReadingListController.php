@@ -55,7 +55,6 @@ class ReadingListController extends Controller
 
     public function storeBook(Request $request, ReadingList $readingList)
     {
-
         // Check if the authenticated user owns the reading list
         if ($readingList->user_id !== auth()->id()) {
             abort(403, 'Unauthorized');
@@ -66,12 +65,18 @@ class ReadingListController extends Controller
             'book_id' => 'required|exists:books,id',
         ]);
 
+        // Check if the book is already added to the reading list
+        if ($readingList->books()->where('book_id', $request->book_id)->exists()) {
+            return redirect()->route('reading_lists.show', $readingList)->with('error', 'Book is already added to the reading list.');
+        }
+
         // Attach the book to the reading list
         $readingList->books()->attach($request->book_id);
 
         // Redirect back to the reading list with a success message
         return redirect()->route('reading_lists.show', $readingList)->with('success', 'Book added to the reading list.');
     }
+
 
 
     /**

@@ -45,9 +45,6 @@ book page
         </select>
     </div>
 
-
-
-
     <div>
         <label for="photo">Photo:</label>
         <input type="file" name="photo" id="photo">

@@ -5,6 +5,9 @@ use App\Http\Controllers\AuthManager;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ReadingListController;
+use App\Models\Book;
+use App\Models\Genre;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -65,3 +68,15 @@ Route::get('/reading_lists/{reading_list}/books/create', [ReadingListController:
     ->name('reading_list.books_add_list');
 
 Route::post('/reading_list/{reading_list}/books', [ReadingListController::class, 'storeBook'])->name('reading_list.books.store');
+
+Route::get('/books/{id}', [App\Http\Controllers\BookController::class, 'show'])->name('book.show');
+
+
+Route::match(['get', 'put'], '/books/{id}/update', function ($id) {
+    $book = Book::findOrFail($id);
+    $genres = Genre::all();
+
+    return view('book.update', compact('book', 'genres'));
+})->name('book.update');
+
+Route::put('/books/{id}/update', [App\Http\Controllers\BookController::class, 'update'])->name('book.update');
