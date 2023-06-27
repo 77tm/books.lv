@@ -25,6 +25,8 @@
 
     </ul>
     @endif
+    <a href="{{ route('reading_list_new') }}" class="btn btn-success">New reading list</a>
+
 </body>
 
 </html>

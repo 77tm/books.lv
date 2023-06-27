@@ -80,3 +80,24 @@ Route::match(['get', 'put'], '/books/{id}/update', function ($id) {
 })->name('book.update');
 
 Route::put('/books/{id}/update', [App\Http\Controllers\BookController::class, 'update'])->name('book.update');
+
+Route::delete('/books/{id}', [App\Http\Controllers\BookController::class, 'destroy'])->name('book.delete');
+
+
+Route::delete('/reading_lists/{id}', [App\Http\Controllers\ReadingListController::class, 'destroy'])->name('readinglist.destroy');
+
+
+Route::delete('/reading_lists/{readingListId}/books/{bookId}', [App\Http\Controllers\ReadingListController::class, 'deleteBook'])->name('readinglist.books.delete');
+
+Route::post('/books/{id}/add-review', [BookController::class, 'addReview'])->name('book.addReview');
+
+Route::get('/profile/edit', [AuthManager::class, 'editProfile'])->name('profile.edit');
+Route::put('/profile/update', [AuthManager::class, 'updateProfile'])->name('profile.update');
+
+Route::get('/profile/reading-lists', [ReadingListController::class, 'profileIndex'])->name('profile.reading_lists');
+
+Route::get('/profile/reviews', [ReviewController::class, 'userReviews'])->name('profile.reviews');
+Route::delete('/reviews/{id}/delete', [App\Http\Controllers\ReviewController::class, 'destroy'])->name('review.delete');
+
+
+Route::put('/reviews/{id}', [ReviewController::class, 'update'])->name('review.update');

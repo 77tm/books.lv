@@ -18,6 +18,12 @@ class ReadingListController extends Controller
         return view('reading_lists', compact('reading_lists'));
     }
 
+    public function profileIndex()
+    {
+        $reading_lists = auth()->user()->reading_lists;
+        return view('reading_lists', compact('reading_lists'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -108,8 +114,25 @@ class ReadingListController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+
+    public function destroy($id)
     {
-        //
+        $readingList = ReadingList::findOrFail($id);
+        $readingList->delete();
+
+        return redirect()->route('reading_lists')->with('success', 'Reading list deleted successfully');
+    }
+
+
+    public function deleteBook($readingListId, $bookId)
+    {
+        $readingList = ReadingList::findOrFail($readingListId);
+        $book = Book::findOrFail($bookId);
+
+        // Remove the book from the reading list
+        $readingList->books()->detach($book->id);
+
+        $readingList = ReadingList::with('books')->findOrFail($readingListId);
+        return view('reading_list_show', compact('readingList'));
     }
 }

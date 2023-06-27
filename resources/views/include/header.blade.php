@@ -1,3 +1,7 @@
+<head>
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+</head>
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{route('home')}}">{{config('app.name')}}</a>
@@ -41,11 +45,28 @@
                 @endauth
 
             </ul>
-            <span class="navbar-text">
-                @auth
-                {{auth()->user()->name}}
-                @endauth
-            </span>
+
+            <!-- Dropdown menu for the user's name -->
+
+            @auth
+
+            <li class="username-ul nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ auth()->user()->name }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="{{route('profile.edit')}}">Edit Profile</a></li>
+                    <li><a class="dropdown-item" href="{{route('profile.reading_lists')}}">View Reading Lists</a></li>
+                    <li><a class="dropdown-item" href="{{route('profile.reviews')}}">View Reviews</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+                </ul>
+            </li>
+
+            @endauth
+
         </div>
     </div>
 </nav>

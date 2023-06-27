@@ -1,56 +1,95 @@
 @extends('layout')
 @section('title', 'Login')
 @section('content')
-book page
 
-<form method="POST" action={{ action([App\Http\Controllers\BookController::class, 'store']) }} enctype="multipart/form-data">
-    @csrf
 
-    <div>
-        <label for="name">Name:</label>
-        <input type="text" name="name" id="name">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+</head>
+
+<body class="book-new-body">
+    <div class="book-new-container">
+        <div class="book-new-form">
+
+
+            <h3>Add a book to the collection </h3> <!--📚 -->
+            <form class="row g-3 form-floating" method="POST" action={{ action([App\Http\Controllers\BookController::class, 'store']) }} enctype="multipart/form-data">
+                @csrf
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Title">
+                        <label for="name">Title</label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="author" name="author" placeholder="Author">
+                        <label for="author">Author</label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="release_year" name="release_year" placeholder="Release Year">
+                        <label for="release_year">Release Year</label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <textarea class="form-control" id="description" name="description" placeholder="Description" rows="3"></textarea>
+                        <label for="description">Description</label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="page_count" name="page_count" placeholder="Page Count">
+                        <label for="page_count">Page Count</label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="language" name="language" placeholder="Language">
+                        <label for="language">Language</label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <select id="genre" class="form-select" name="genre" placeholder="Genre">
+                            @foreach ($genres as $genre)
+                            <option value="{{ $genre->id }}">{{ $genre->name }}</option>
+                            @endforeach
+                        </select>
+                        <label for="genre">Genre</label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <input type="file" class="form-control" id="photo" name="photo" placeholder="Photo">
+                        <label for="photo">Photo</label>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-dark">Submit</button>
+                </div>
+            </form>
+
+
+        </div>
+        <!-- <div class="video-container-book">
+            <video autoplay loop muted>
+                <source src="{{ asset('uploads/gradient-video.mp4') }}" type="video/mp4">
+            </video>
+        </div> -->
+        <div class="new-book-img">
+            <img src="uploads/book-cover3.jpeg" alt="Image" class="img-fluid">
+        </div>
     </div>
 
-    <div>
-        <label for="author">Author:</label>
-        <input type="text" name="author" id="author">
-    </div>
 
-    <div>
-        <label for="release_year">Release Year:</label>
-        <input type="number" name="release_year" id="release_year">
-    </div>
+</body>
 
-    <div>
-        <label for="description">Description:</label>
-        <textarea name="description" id="description"></textarea>
-    </div>
-
-    <div>
-        <label for="page_count">Page Count:</label>
-        <input type="number" name="page_count" id="page_count">
-    </div>
-
-    <div>
-        <label for="language">Language:</label>
-        <input type="text" name="language" id="language">
-    </div>
-
-    <div>
-        <label for="language">Genre:</label>
-        <select name="genre">
-            @foreach ($genres as $genre)
-            <option value="{{ $genre->id }}">{{ $genre->name }}</option>
-            @endforeach
-        </select>
-    </div>
-
-    <div>
-        <label for="photo">Photo:</label>
-        <input type="file" name="photo" id="photo">
-    </div>
-
-    <button type="submit">Submit</button>
-</form>
-
+</html>
 @endsection

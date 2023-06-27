@@ -64,4 +64,32 @@ class AuthManager extends Controller
         Auth::logout();
         return redirect(route('login'));
     }
+
+
+    function editProfile()
+    {
+        $user = Auth::user();
+        return view('edit-profile', compact('user'));
+    }
+
+    function updateProfile(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . Auth::id(),
+            'password' => 'nullable|confirmed',
+        ]);
+
+        $user = Auth::user();
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->route('home')->with('success', 'Profile updated successfully');
+    }
 }

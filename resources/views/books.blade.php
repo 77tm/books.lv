@@ -8,10 +8,19 @@
 <head>
     <meta charset="UTF-8">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <!-- <script src="{{ asset('js/search-books.js') }}"></script> -->
 </head>
 
 <body>
-    <h1>Pick a book you like</h1>
+    <h1>Our book collection</h1>
+
+    <!-- <div class="search-container">
+        <label for="search-input">Search by Book Name:</label>
+        <input type="text" id="search-input" name="search" placeholder="Enter book name">
+        <ul id="search-results"></ul>
+    </div> -->
+
+
     @if (count($books) == 0)
     <p class='error'>There are no records in the database!</p>
     @else
@@ -37,7 +46,7 @@
 
                 <div class="book-details">
 
-                    <h3>{{ $book->name }}</h3>
+                    <h3><b>{{ $book->name }}</b></h3>
                     <p>Author: {{ $book->author }}</p>
                     <p>Release Date: {{ $book->release_year }}</p>
                     <a href="{{ route('book.show', ['id' => $book->id]) }}" class="show-more-btn">Show More</a>
@@ -69,6 +78,23 @@
 
     </ul>
     @endif
+
+    <div class="genre-search">
+        <form method="GET" action="{{ route('books.index') }}">
+            <div class="form-group">
+                <label for="genre">Search by Genre:</label>
+                <select name="genre" id="genre" class="form-control">
+                    <option value="">All Genres</option>
+                    @foreach ($genres as $genre)
+                    <option value="{{ $genre->id }}">{{ $genre->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <button type="submit" class="btn btn-dark">Search</button>
+        </form>
+    </div>
+
+
 </body>
 
 </html>

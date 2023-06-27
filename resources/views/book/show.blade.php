@@ -1,16 +1,113 @@
 @extends('layout')
-@section('title', 'List of books')
+@section('title', 'Book Details')
 @section('content')
 
-{{ $book->name }} - {{ $book->author }} - {{ $book->release_year }} - {{ $book->description }} - {{ $book->page_count }}
-- {{ $book->language }} - {{ $book->genre->name }} - <img src="{{ $book->photo }}" alt="Book Photo">
+<head>
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/search-books.js') }}"></script>
 
-<!-- <form method="POST" action="{{ route('book.update', ['id' => $book->id]) }}">
-    @csrf
-    @method('PUT')
-    <button type="submit">Edit</button>
-</form> -->
+</head>
 
-<a href="{{ route('book.update', ['id' => $book->id]) }}" class="show-more-btn">Edit</a>
+<div class="book-details_show">
+    <div class="book-photo_show">
+        @if ($book->photo)
+        <img src="{{ asset('/storage/storage/uploads/' . $book->photo) }}" alt="Book Image">
+        @else
+        <img src="/uploads/no-image.png" alt="Book Image">
+        @endif
+    </div>
+    <div class="book-info_show">
+        <h2>{{ $book->name }}</h2>
+        <p>Author: {{ $book->author }}</p>
+        <p>Release Year: {{ $book->release_year }}</p>
+        <p>Description: {{ $book->description }}</p>
+        <p>Page Count: {{ $book->page_count }}</p>
+        <p>Language: {{ $book->language }}</p>
+        <p>Genre: {{ $book->genre->name }}</p>
+
+        <div class="buttons_show">
+            <a href="{{ route('book.update', ['id' => $book->id]) }}" class="btn btn-dark">Edit</a>
+
+            <form method="POST" action="{{ route('book.delete', ['id' => $book->id]) }}" onsubmit="return confirm('Are you sure you want to delete this book?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-light">Delete</button>
+            </form>
+            <!-- <a href="#add-review" class="btn btn-success">Add review</a> -->
+
+
+            <button id="add-review-button" class="btn btn-success">Add Review</button>
+        </div>
+    </div>
+</div>
+
+<div class="reviews">
+    <h3>Reviews:</h3>
+    <div class="review-list">
+        @if ($book->reviews->count() > 0)
+        @foreach ($book->reviews as $review)
+        <hr>
+
+        <div class="review">
+            <div class="review-header">
+                <div class="review-rating">
+                    <!-- Rating: -->
+                    @for ($i = 1; $i <= 5; $i++) @if ($i <=$review->rating)
+                        <span class="star-icon filled">&#9733;</span>
+                        @else
+                        <span class="star-icon">&#9734;</span>
+                        @endif
+                        @endfor
+                        <b>{{ $review->title }}</b>
+                </div>
+            </div>
+            <div class="review-author">by {{ $review->user->name }}</div>
+
+            <!-- <div class="review-title">{{ $review->title }}</div> -->
+            <div class="review-comment">{{ $review->content }}</div>
+        </div>
+
+        @endforeach
+        <hr>
+
+        @else
+        <p>No reviews yet.</p>
+        @endif
+
+
+        <div id="overlay">
+            <div id="modal">
+                <div class="add-review" id="add-review">
+                    <h3>Add a Review</h3>
+                    <form method="POST" action="{{ route('book.addReview', ['id' => $book->id]) }}">
+                        @csrf
+                        <div class="form-group">
+                            <label for="rating">Rating:</label>
+                            <select name="rating" id="rating">
+                                <option value="1">1 star</option>
+                                <option value="2">2 stars</option>
+                                <option value="3">3 stars</option>
+                                <option value="4">4 stars</option>
+                                <option value="5">5 stars</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="title">Title:</label>
+                            <textarea name="title" id="title"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="content">Comment:</label>
+                            <textarea name="content" id="content"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 @endsection
