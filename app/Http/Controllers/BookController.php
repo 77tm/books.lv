@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Genre;
 use App\Models\Review;
+use App\Models\ReadingList;
 
 
 class BookController extends Controller
@@ -73,7 +74,9 @@ class BookController extends Controller
     public function show($id)
     {
         $book = Book::findOrFail($id);
-        return view('book.show', compact('book'));
+        $readingLists = ReadingList::where('user_id', auth()->id())->get();
+
+        return view('book.show', compact('book', 'readingLists'));
     }
 
     public function update(Request $request, $id)

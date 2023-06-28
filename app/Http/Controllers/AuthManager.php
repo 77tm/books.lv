@@ -90,6 +90,26 @@ class AuthManager extends Controller
 
         $user->save();
 
-        return redirect()->route('home')->with('success', 'Profile updated successfully');
+        return redirect()->route('profile.edit')->with('success', 'Profile updated successfully');
+    }
+
+
+    public function destroy()
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            // User not found
+            return redirect()->route('home')->with('error', 'User not found.');
+        }
+
+        // Perform authorization check if required
+
+        $user->delete();
+
+        // Log out the user after deleting the account if needed
+        auth()->logout();
+
+        return redirect()->route('home')->with('success', 'User deleted successfully.');
     }
 }

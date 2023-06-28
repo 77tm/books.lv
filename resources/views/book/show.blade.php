@@ -18,31 +18,32 @@
     </div>
     <div class="book-info_show">
         <h2>{{ $book->name }}</h2>
-        <p>Author: {{ $book->author }}</p>
-        <p>Release Year: {{ $book->release_year }}</p>
-        <p>Description: {{ $book->description }}</p>
-        <p>Page Count: {{ $book->page_count }}</p>
-        <p>Language: {{ $book->language }}</p>
-        <p>Genre: {{ $book->genre->name }}</p>
+        <p>{{ __('Author') }}: {{ $book->author }}</p>
+        <p>{{ __('Release Year') }}: {{ $book->release_year }}</p>
+        <p>{{ __('Description') }}: {{ $book->description }}</p>
+        <p>{{ __('Page Count') }}: {{ $book->page_count }}</p>
+        <p>{{ __('Language') }}: {{ $book->language }}</p>
+        <p>{{ __('Genre') }}: {{ $book->genre->name }}</p>
 
         <div class="buttons_show">
-            <a href="{{ route('book.update', ['id' => $book->id]) }}" class="btn btn-dark">Edit</a>
+            <a href="{{ route('book.update', ['id' => $book->id]) }}" class="btn btn-dark">{{ __('Edit') }}</a>
 
             <form method="POST" action="{{ route('book.delete', ['id' => $book->id]) }}" onsubmit="return confirm('Are you sure you want to delete this book?')">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-light">Delete</button>
+                <button type="submit" class="btn btn-light">{{ __('Delete') }}</button>
             </form>
-            <!-- <a href="#add-review" class="btn btn-success">Add review</a> -->
+            <!-- <a href="{{ route('book.addList', ['id' => $book->id]) }}" id="add-to-list-button" class="btn btn-info">Add to Reading List</a> -->
 
 
-            <button id="add-review-button" class="btn btn-success">Add Review</button>
+
+            <button id="add-review-button" class="btn btn-success">{{ __('Add Review') }}</button>
         </div>
     </div>
 </div>
 
 <div class="reviews">
-    <h3>Reviews:</h3>
+    <h3 class="rev">{{ __('Reviews') }}</h3>
     <div class="review-list">
         @if ($book->reviews->count() > 0)
         @foreach ($book->reviews as $review)
@@ -61,7 +62,7 @@
                         <b>{{ $review->title }}</b>
                 </div>
             </div>
-            <div class="review-author">by {{ $review->user->name }}</div>
+            <div class="review-author">{{ __('by') }} {{ $review->user->name }}</div>
 
             <!-- <div class="review-title">{{ $review->title }}</div> -->
             <div class="review-comment">{{ $review->content }}</div>
@@ -78,34 +79,36 @@
         <div id="overlay">
             <div id="modal">
                 <div class="add-review" id="add-review">
-                    <h3>Add a Review</h3>
+                    <h3>{{ __('Add a review') }}</h3>
                     <form method="POST" action="{{ route('book.addReview', ['id' => $book->id]) }}">
                         @csrf
                         <div class="form-group">
-                            <label for="rating">Rating:</label>
+                            <label for="rating">{{ __('Rating') }}:</label>
                             <select name="rating" id="rating">
-                                <option value="1">1 star</option>
-                                <option value="2">2 stars</option>
-                                <option value="3">3 stars</option>
-                                <option value="4">4 stars</option>
-                                <option value="5">5 stars</option>
+                                <option value="1">1 {{ __('star') }}</option>
+                                <option value="2">2 {{ __('stars') }}</option>
+                                <option value="3">3 {{ __('stars') }}</option>
+                                <option value="4">4 {{ __('stars') }}</option>
+                                <option value="5">5 {{ __('stars') }}</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="title">Title:</label>
+                            <label for="title">{{ __('Title') }}:</label>
                             <textarea name="title" id="title"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="content">Comment:</label>
+                            <label for="content">{{ __('Comment') }}:</label>
                             <textarea name="content" id="content"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="submit" class="btn btn-success">{{ __('Submit') }}</button>
                     </form>
                 </div>
 
             </div>
         </div>
+
     </div>
+</div>
 </div>
 
 

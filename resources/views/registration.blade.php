@@ -22,7 +22,7 @@
     <div class="home-content">
         <!-- <h1>Join the fastest growing book club</h1> -->
         <!-- <h1>Register and discover the secret passages <br>of the bookworm kingdom! 🚪📚</h1> -->
-        <h1><b>Register</b> and uncover bookworm <br>kingdom's hidden passages 🦄</h1>
+        <h1><b>{{ __('Register') }}</b> {{ __('and uncover bookworm') }} <br>{{ __("kingdom's hidden passages") }} 🦄</h1>
 
         <!-- <p>Become a member and <b>register</b> or <b>log in</b> if you already have an account</p> -->
 
@@ -48,18 +48,18 @@
             <form action="{{route('registration.post')}}" method="POST" class=" mt-4" style="width: 300px">
                 @csrf
                 <div class="mb-3">
-                    <label for="name" class="form-label">Full name</label>
+                    <label for="name" class="form-label">{{ __('Full name') }}</label>
                     <input type="text" class="form-control" id="name" name="name">
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
+                    <label for="email" class="form-label">{{ __('Email address') }}</label>
                     <input type="email" class="form-control" id="email" name="email">
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="password" class="form-label">{{ __('Password') }}</label>
                     <input type="password" class="form-control" id="password" name="password">
                 </div>
-                <button type="submit" class="btn btn-dark">Submit</button>
+                <button type="submit" class="btn btn-dark">{{ __('Submit') }}</button>
             </form>
             <!-- <div class="button-container">
             <a href="{{ route('registration') }}" class="button">Register</a>

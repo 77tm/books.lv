@@ -46,6 +46,15 @@ class ReviewController extends Controller
     }
 
 
+    public function edit($id)
+    {
+        $review = Review::findOrFail($id);
+
+
+        return view('review_edit')->with('review', $review);
+    }
+
+
     public function update(Request $request, $id)
     {
         // Validate the form data
@@ -64,8 +73,8 @@ class ReviewController extends Controller
         $review->content = $validatedData['content'];
         $review->save();
 
-        // Redirect back to the book's show page or wherever needed
-        return redirect()->back()->with('success', 'Review updated successfully.');
+        $reviews = Review::all();
+        return view('reviews', compact('reviews'));
     }
 
 

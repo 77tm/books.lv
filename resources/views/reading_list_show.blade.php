@@ -2,63 +2,65 @@
 @section('title', 'List of books')
 @section('content')
 
-<h1>{{ $readingList->name }}</h1>
-<p>{{ $readingList->description }}</p>
+<div class="list-information">
+    <h2 class="reading-list-title">{{ $readingList->name }}</h2>
+    <h6 class="reading-list-info">{{ __('by') }} {{ $readingList->user->name }}</h6>
+    <p class="reading-list-description">{{ $readingList->description }}</p>
+</div>
 
-
-
-
-
-<!-- Display the list of books in the reading list -->
-<h2>Books in the Reading List:</h2>
-<!-- <ul>
+@if (count($readingList->books) == 0)
+<div class="no-books-message">
+    <h2 class="empty-list-message"><b>{{ __('There are no books in this reading list') }} 🤷‍♂️</b></h2>
+</div>
+@else
+<div class="book-container">
     @foreach ($readingList->books as $book)
-    <li>{{ $book->name }} by {{ $book->author }}</li>
-    @endforeach
-</ul> -->
+    <div class="card shadow">
+        @if ($book->photo)
+        <img src="{{ asset('/storage/storage/uploads/' . $book->photo) }}" alt="Book Image">
+        @else
+        <img src="/uploads/no-image.png" alt="Book Image">
+        @endif
 
-@if ($readingList->user_id === auth()->id())
-<!-- Button to Add Books -->
+        <div class="book-details">
+            <h3><b>{{ $book->name }}</b></h3>
+            <p>{{ __('Author') }}: {{ $book->author }}</p>
+            <p>{{ __('Release Year') }}: {{ $book->release_year }}</p>
 
+            <div class="buttons_show">
+                <a href="{{ route('book.show', ['id' => $book->id]) }}" class="btn btn-dark">{{ __('More') }}</a>
 
-<ul>
-
-    @foreach ($readingList->books as $book)
-    <div>
-        <!-- Display book details -->
-
-        <li>{{ $book->name }} by {{ $book->author }}</li>
-
-        <!-- Delete button with confirmation prompt -->
-        <form method="POST" action="{{ route('readinglist.books.delete', ['readingListId' => $readingList->id, 'bookId' => $book->id]) }}" id="delete-form">
-            @csrf
-            @method('DELETE')
-
-            <button type="submit" onclick="return confirm('Are you sure you want to remove this book from the reading list?')">Remove</button>
-        </form>
+                @if ($readingList->user_id === auth()->id())
+                <form method="POST" action="{{ route('readinglist.books.delete', ['readingListId' => $readingList->id, 'bookId' => $book->id]) }}" id="delete-form">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to remove this book from the reading list?')">{{ __('Remove') }}</button>
+                </form>
+                @endif
+            </div>
+        </div>
     </div>
     @endforeach
-</ul>
-
-
-<a href="{{ route('reading_list.books_add_list', $readingList) }}">Add Books</a>
-
-<form method="POST" action="{{ route('readinglist.destroy', ['id' => $readingList->id]) }}" id="delete-form">
-    @csrf
-    @method('DELETE')
-    <button type="submit" onclick="return confirm('Are you sure you want to delete this reading list?')">Delete</button>
-</form>
-
-@else
-<ul>
-    @foreach ($readingList->books as $book)
-    <li>{{ $book->name }} by {{ $book->author }}</li>
-    @endforeach
-</ul>
-<!-- Display the name of the reading list creator -->
-<p>Created by: {{ $readingList->user->name }}</p>
+</div>
 @endif
 
+<hr>
 
+<div class="buttons_show">
+    <div class="list-btns">
+        @if ($readingList->user_id === auth()->id())
+        <a href="{{ route('reading_list.books_add_list', $readingList) }}" class="btn btn-success">{{ __('Add Books') }}</a>
+
+        <form method="POST" action="{{ route('readinglist.destroy', ['id' => $readingList->id]) }}" id="delete-form">
+            @csrf
+            @method('DELETE')
+            <button class="btn btn-link text-dark" type="submit" onclick="return confirm('Are you sure you want to delete this reading list?')">{{ __('Delete reading list') }}</button>
+        </form>
+        @else
+    </div>
+    <!-- Display the name of the reading list creator -->
+    <p class="created-by">{{ __('Created by') }}: {{ $readingList->user->name }}</p>
+    @endif
+</div>
 
 @endsection

@@ -11,40 +11,54 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{route('home')}}">Home</a>
+                    <a class="nav-link active" aria-current="page" href="{{route('home')}}">{{ __('Home') }}</a>
                 </li>
                 @auth
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="{{route('logout')}}">{{ __('Logout')}}</a>
+                </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('logout')}}">Logout</a>
+                    <a class="nav-link" href="{{route('book_new')}}">{{ __('Add a book') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('book_new')}}">Add a book</a>
+                    <a class="nav-link" href="{{route('books.index')}}">{{ __('Books') }}</a>
                 </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="{{route('review_new')}}">{{ __('Add a review') }}</a>
+                </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('books.index')}}">Books</a>
+                    <a class="nav-link" href="{{route('reviews')}}">{{ __('Reviews') }}</a>
                 </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="{{route('reading_list_new')}}">{{ __('New reading list') }}</a>
+                </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('review_new')}}">Add a review</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('reviews')}}">Reviews</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('reading_list_new')}}">New reading list</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('reading_lists')}}">Reading lists</a>
+                    <a class="nav-link" href="{{route('reading_lists')}}">{{ __('Reading lists') }}</a>
                 </li>
                 @else
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('login')}}">Login</a>
+                    <a class="nav-link" href="{{route('login')}}">{{ __('Login') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('registration')}}">Registration</a>
+                    <a class="nav-link" href="{{route('registration')}}">{{ __('Registration') }}</a>
                 </li>
                 @endauth
 
             </ul>
+
+
+            <!-- Language Switcher -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('lang.switch', ['locale' => 'en']) }}">EN</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('lang.switch', ['locale' => 'lv']) }}">LV</a>
+                </li>
+            </ul>
+
+
+
 
             <!-- Dropdown menu for the user's name -->
 
@@ -55,13 +69,13 @@
                     {{ auth()->user()->name }}
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="{{route('profile.edit')}}">Edit Profile</a></li>
-                    <li><a class="dropdown-item" href="{{route('profile.reading_lists')}}">View Reading Lists</a></li>
-                    <li><a class="dropdown-item" href="{{route('profile.reviews')}}">View Reviews</a></li>
+                    <li><a class="dropdown-item" href="{{route('profile.edit')}}">{{ __('Edit Profile') }}</a></li>
+                    <li><a class="dropdown-item" href="{{route('profile.reading_lists')}}">{{ __('My Reading Lists') }}</a></li>
+                    <li><a class="dropdown-item" href="{{route('profile.reviews')}}">{{ __('My Reviews') }}</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+                    <li><a class="dropdown-item" href="{{ route('logout') }}">{{ __('Logout') }}</a></li>
                 </ul>
             </li>
 

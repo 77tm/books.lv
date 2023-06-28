@@ -9,63 +9,61 @@
 
 <body>
     @extends('layout')
-    @section('title', 'Login')
+    @section('title', 'Reviews')
     @section('content')
-    <h1>These are all the reviews</h1>
-    @if (count($reviews) == 0)
-    <p class='error'>There are no records in the database!</p>
-    @else
-    <ul>
-        @foreach ($reviews as $review)
-        <li>
-            {{ $review->user->name }} - {{ $review->book->name }} by {{$review->book->author}} - {{ $review->rating }} - {{ $review->title }} - {{ $review->content }}
-            @if ($review->user_id === auth()->id())
-            <div class="buttons_show">
-                <button class="edit-review-button btn btn-success" data-review-id="{{ $review->id }}">Edit</button>
-                <form method="POST" action="{{ route('review.delete', ['id' => $review->id]) }}" onsubmit="return confirm('Are you sure you want to delete this review?')">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </div>
-            @endif
-        </li>
-        @endforeach
-    </ul>
-    @endif
 
-    @foreach ($reviews as $review)
-    <div id="overlay-{{ $review->id }}">
-        <div class="modal">
-            <div class="edit-review-show" id="edit-review-{{ $review->id }}">
-                <h3>Edit Review</h3>
-                <form method="POST" action="{{ route('review.update', ['id' => $review->id]) }}">
-                    @csrf
-                    @method('PUT')
-                    <div class="form-group">
-                        <label for="rating">Rating:</label>
-                        <select name="rating" id="rating">
-                            <option value="1" {{ $review->rating == 1 ? 'selected' : '' }}>1 star</option>
-                            <option value="2" {{ $review->rating == 2 ? 'selected' : '' }}>2 stars</option>
-                            <option value="3" {{ $review->rating == 3 ? 'selected' : '' }}>3 stars</option>
-                            <option value="4" {{ $review->rating == 4 ? 'selected' : '' }}>4 stars</option>
-                            <option value="5" {{ $review->rating == 5 ? 'selected' : '' }}>5 stars</option>
-                        </select>
+    <div class="review-heading">
+        <h3>{{ __('Welcome, book critic') }} 😎</h3>
+        <p>{{ __('Here you can see all') }}<b> {{ __('reviews') }}</b></p>
+    </div>
+
+    @if (count($reviews) == 0)
+    <p class='error'>{{ __('There are no reviews in the database') }}!</p>
+    @else
+    <div class="reviews">
+
+        <div class="review-list">
+            @foreach ($reviews as $review)
+            <hr>
+            <div class="review">
+                <div class="book-info">
+                    <b>{{ $review->book->name }}</b> by {{ $review->book->author }}
+                </div>
+                <div class="review-header">
+                    <div class="review-rating">
+                        @for ($i = 1; $i <= 5; $i++) @if ($i <=$review->rating)
+                            <span class="star-icon filled">&#9733;</span>
+                            @else
+                            <span class="star-icon">&#9734;</span>
+                            @endif
+                            @endfor
+                            <b>{{ $review->title }}</b>
                     </div>
-                    <div class="form-group">
-                        <label for="title">Title:</label>
-                        <input type="text" name="title" id="title" value="{{ $review->title }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="content">Content:</label>
-                        <textarea name="content" id="content">{{ $review->content }}</textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </form>
+                </div>
+                <div class="review-info">
+
+                    <div class="review-author">by {{ $review->user->name }}</div>
+                </div>
+                <div class="review-comment">{{ $review->content }}</div>
+                @if ($review->user_id === auth()->id())
+                <div class="buttons_show">
+
+                    <a href="{{ route('review.edit', ['id' => $review->id]) }}" class="edit-review-button btn btn-dark btn-sm">{{ __('Edit') }}</a>
+
+                    <form method="POST" action="{{ route('review.delete', ['id' => $review->id]) }}" onsubmit="return confirm('Are you sure you want to delete this review?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-secondary btn-sm">{{ __('Delete') }}</button>
+                    </form>
+                </div>
+                @endif
             </div>
+            @endforeach
+            <hr>
         </div>
     </div>
-    @endforeach
+    @endif
+
 
     @endsection
 </body>

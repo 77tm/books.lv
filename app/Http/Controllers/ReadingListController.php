@@ -84,6 +84,47 @@ class ReadingListController extends Controller
     }
 
 
+    public function addList(Request $request, $id)
+    {
+        // Find the book
+        $book = Book::findOrFail($id);
+
+        // Get the authenticated user
+        $user = auth()->user();
+
+        // Get the selected reading lists
+        $selectedLists = $request->input('reading_lists', []);
+
+        // Add the book to the selected reading lists
+        foreach ($selectedLists as $listId) {
+            $readingList = ReadingList::where('user_id', $user->id)->findOrFail($listId);
+            $readingList->books()->attach($book->id);
+        }
+
+        return redirect()->route('book.show', ['id' => $id])->with('success', 'Book added to reading list successfully.');
+    }
+
+    public function newList(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+
+
+        $readingList = new ReadingList();
+        $readingList->user_id = Auth::id();
+
+        $readingList->name = $validatedData['name'];
+        $readingList->description = $validatedData['description'];
+        // You may need to set the user ID or any other relevant fields here
+
+        // Save the reading list
+        $readingList->save();
+
+        // Optionally, you can redirect the user to the reading list show page
+        return redirect()->route('reading_lists.show', $readingList->id);
+    }
 
     /**
      * Display the specified resource.

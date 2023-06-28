@@ -3,7 +3,7 @@
 @section('content')
 
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}">
 
 <head>
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
@@ -20,7 +20,7 @@
     </div>
     <div class="home-content">
         <!-- <h1>Join the fastest growing book club</h1> -->
-        <h1><b>Login</b> and get lost in the literary<br> wonders 🔮</h1>
+        <h1><b>{{ __('Login') }}</b> {{ __('and get lost in the literary') }}<br> {{ __('wonders') }} 🔮 </h1> <!-- {{ __('')}} -->
 
         <!-- <p>Become a member and <b>register</b> or <b>log in</b> if you already have an account</p> -->
 
@@ -46,30 +46,22 @@
             <form action="{{route('login.post')}}" method="POST" class="mt-4" style="width: 300px">
                 @csrf
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
+                    <label for="email" class="form-label">{{ __('Email address') }}</label>
                     <input type="email" class="form-control" id="email" name="email">
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="password" class="form-label">{{ __('Password') }}</label>
                     <input type="password" class="form-control" id="password" name="password">
                 </div>
                 <div class="button-container">
 
-                    <button type="submit" class="btn btn-dark">Login</button>
-                    <a href="{{ route('registration') }}" class="button link-dark">Register</a>
+                    <button type="submit" class="btn btn-dark">{{ __('Login') }}</button>
+                    <a href="{{ route('registration') }}" class="button link-dark">{{ __('Register') }}</a>
 
                 </div>
-                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
             </form>
         </div>
-        <!-- <div class="button-container">
-            <a href="{{ route('registration') }}" class="button">Register</a>
-
-            <a href="{{ route('login') }}" class="button">Login</a>
-
-        </div> -->
     </div>
-
 
 </body>
 
