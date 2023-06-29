@@ -32,6 +32,7 @@
             <p>{{ __('Genre') }}: {{ $book->genre->name }}</p>
 
             <div class="buttons_show">
+                @if (Auth::user()->role == 1)
                 <a href="{{ route('book.update', ['id' => $book->id]) }}" class="btn btn-dark">{{ __('Edit') }}</a>
 
                 <form method="POST" action="{{ route('book.delete', ['id' => $book->id]) }}" onsubmit="return confirm('Are you sure you want to delete this book?')">
@@ -39,6 +40,7 @@
                     @method('DELETE')
                     <button type="submit" class="btn btn-light">{{ __('Delete') }}</button>
                 </form>
+                @endif
 
                 <button id="add-review-button" class="btn btn-success">{{ __('Add Review') }}</button>
             </div>
