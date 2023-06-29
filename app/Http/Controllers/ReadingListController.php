@@ -9,9 +9,7 @@ use App\Models\Book;
 
 class ReadingListController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $reading_lists = ReadingList::all();
@@ -25,9 +23,6 @@ class ReadingListController extends Controller
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('reading_list_new');
@@ -40,8 +35,8 @@ class ReadingListController extends Controller
     {
         $reading_list = new ReadingList();
         $reading_list->user_id = Auth::id();
-        $reading_list->name = $request->name;
-        $reading_list->description = $request->description;
+        $reading_list->name = htmlspecialchars($request->name);
+        $reading_list->description = htmlspecialchars($request->description);
         $reading_list->save();
 
         $reading_lists = ReadingList::all();
@@ -50,12 +45,10 @@ class ReadingListController extends Controller
 
     public function createBook(ReadingList $readingList)
     {
-        // Check if the authenticated user owns the reading list
         if ($readingList->user_id !== auth()->id()) {
             abort(403, 'Unauthorized');
         }
         $books = Book::all();
-        // Pass the reading list to the view
         return view('books_add_list', compact('readingList', 'books'));
     }
 
@@ -115,8 +108,8 @@ class ReadingListController extends Controller
         $readingList = new ReadingList();
         $readingList->user_id = Auth::id();
 
-        $readingList->name = $validatedData['name'];
-        $readingList->description = $validatedData['description'];
+        $readingList->name = htmlspecialchars($validatedData['name']);
+        $readingList->description = htmlspecialchars($validatedData['description']);
         // You may need to set the user ID or any other relevant fields here
 
         // Save the reading list

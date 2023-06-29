@@ -21,15 +21,13 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-// Route::group(['prefix' => 'lang'], function () {
-//     Route::get('/{locale}', 'App\Http\Controllers\LanguageController@switch')->name('lang.switch');
-// })->middleware('web');
 
-// Auth::routes
+
+
 
 Route::get('/', function () {
     return view('home');
-})->middleware('setLocale')->name('home');
+})->name('home');
 
 Route::get('/login', [AuthManager::class, 'login'])->name('login');
 Route::post('/login', [AuthManager::class, 'loginPost'])->name('login.post');
@@ -128,3 +126,5 @@ Route::put('/reviews/{id}', [ReviewController::class, 'update'])->name('review.u
 Route::delete('/profile/edit/delete', [AuthManager::class, 'destroy'])->name('profile.delete');
 
 Route::get('/reviews/{id}/edit', [ReviewController::class, 'edit'])->name('review.edit');
+
+Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);

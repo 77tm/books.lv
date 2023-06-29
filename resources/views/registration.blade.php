@@ -1,31 +1,25 @@
-</div>
 @extends('layout')
 @section('title', "Home")
 @section('content')
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 
 <body>
-
     <div class="video-container">
         <video autoplay loop muted>
             <source src="{{ asset('uploads/background_video6.mp4') }}" type="video/mp4">
-            <!-- Add additional <source> elements for other video formats if necessary -->
         </video>
-        <!-- <div class="video-overlay"></div> -->
     </div>
     <div class="home-content">
-        <!-- <h1>Join the fastest growing book club</h1> -->
-        <!-- <h1>Register and discover the secret passages <br>of the bookworm kingdom! 🚪📚</h1> -->
         <h1><b>{{ __('Register') }}</b> {{ __('and uncover bookworm') }} <br>{{ __("kingdom's hidden passages") }} 🦄</h1>
-
-        <!-- <p>Become a member and <b>register</b> or <b>log in</b> if you already have an account</p> -->
-
 
         <div class="container">
             <div class="mt-2">
@@ -49,7 +43,7 @@
                 @csrf
                 <div class="mb-3">
                     <label for="name" class="form-label">{{ __('Full name') }}</label>
-                    <input type="text" class="form-control" id="name" name="name">
+                    <input type="text" class="form-control" id="name" name="name" minlength="1">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">{{ __('Email address') }}</label>
@@ -57,19 +51,12 @@
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">{{ __('Password') }}</label>
-                    <input type="password" class="form-control" id="password" name="password">
+                    <input type="password" class="form-control" id="password" name="password" minlength="7">
                 </div>
                 <button type="submit" class="btn btn-dark">{{ __('Submit') }}</button>
             </form>
-            <!-- <div class="button-container">
-            <a href="{{ route('registration') }}" class="button">Register</a>
-
-            <a href="{{ route('login') }}" class="button">Login</a>
-
-        </div> -->
         </div>
-
-
+    </div>
 </body>
 
 </html>

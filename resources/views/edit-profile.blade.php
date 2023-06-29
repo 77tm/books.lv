@@ -2,19 +2,19 @@
 @section('title', 'Profile')
 @section('content')
 
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 
-
 <body class="profile-body">
-
-
     <div class="home-content-profile">
-
         <h1><b>{{ __('Change') }}</b> {{ __('user information') }} 👷‍♀️</h1>
 
         <div class="login-container">
@@ -54,9 +54,7 @@
                     <label for="password_confirmation" class="form-label">{{ __('Confirm new password') }}</label>
                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
                 </div>
-
                 <div class="button-container">
-
                     <button type="submit" class="btn btn-dark">{{ __('Update Profile') }}</button>
             </form>
 
@@ -65,16 +63,11 @@
                 @method('DELETE')
                 <button type="submit" class="btn btn-link text-dark">{{ __('Delete Account') }}</button>
             </form>
-
-
-
-
-
-
-
         </div>
 
     </div>
+    </div>
 </body>
 
+</html>
 @endsection

@@ -13,15 +13,15 @@ class AuthManager extends Controller
     function login()
     {
         if (Auth::check()) {
-            return redirect(route('home'));
+            return redirect(route('books.index'));
         }
-        return view('login');
+        return view('home');
     }
 
     function registration()
     {
         if (Auth::check()) {
-            return redirect(route('home'));
+            return redirect(route('books.index'));
         }
         return view('registration');
     }
@@ -33,11 +33,11 @@ class AuthManager extends Controller
             'password' => 'required'
         ]);
 
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only(htmlspecialchars('email'), htmlspecialchars('password'));
         if (Auth::attempt($credentials)) {
-            return redirect()->intended(route('home'));
+            return redirect()->intended(route('books.index'));
         }
-        return redirect(route('login'))->with("error", "Login details are not valid");
+        return redirect(route('home'))->with("error", "Login details are not valid");
     }
 
     function registrationPost(Request $request)
@@ -48,21 +48,21 @@ class AuthManager extends Controller
             'password' => 'required'
         ]);
 
-        $data['name'] = $request->name;
-        $data['email'] = $request->email;
-        $data['password'] = Hash::make($request->password);
+        $data['name'] = htmlspecialchars($request->name);
+        $data['email'] = htmlspecialchars($request->email);
+        $data['password'] = Hash::make(htmlspecialchars($request->password));
         $user = User::create($data);
         if (!$user) {
             return redirect(route('registration'))->with("error", "Registration failed");
         }
-        return redirect(route('login'))->with("success", "Registration successful");
+        return redirect(route('home'))->with("success", "Registration successful");
     }
 
     function logout()
     {
         Session::flush();
         Auth::logout();
-        return redirect(route('login'));
+        return redirect(route('home'));
     }
 
 
@@ -81,11 +81,11 @@ class AuthManager extends Controller
         ]);
 
         $user = Auth::user();
-        $user->name = $request->name;
-        $user->email = $request->email;
+        $user->name = htmlspecialchars($request->name);
+        $user->email = htmlspecialchars($request->email);
 
         if ($request->password) {
-            $user->password = Hash::make($request->password);
+            $user->password = Hash::make(htmlspecialchars($request->password));
         }
 
         $user->save();
@@ -103,11 +103,7 @@ class AuthManager extends Controller
             return redirect()->route('home')->with('error', 'User not found.');
         }
 
-        // Perform authorization check if required
-
         $user->delete();
-
-        // Log out the user after deleting the account if needed
         auth()->logout();
 
         return redirect()->route('home')->with('success', 'User deleted successfully.');

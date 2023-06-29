@@ -1,3 +1,7 @@
+@extends('layout')
+@section('title', 'Reviews')
+@section('content')
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,10 +12,6 @@
 </head>
 
 <body>
-    @extends('layout')
-    @section('title', 'Reviews')
-    @section('content')
-
     <div class="review-heading">
         <h3>{{ __('Welcome, book critic') }} 😎</h3>
         <p>{{ __('Here you can see all') }}<b> {{ __('reviews') }}</b></p>
@@ -63,9 +63,8 @@
         </div>
     </div>
     @endif
-
-
-    @endsection
 </body>
 
 </html>
+
+@endsection

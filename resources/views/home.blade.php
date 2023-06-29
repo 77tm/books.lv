@@ -6,24 +6,20 @@
 <html lang="{{ app()->getLocale() }}">
 
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 
 <body>
-
     <div class="video-container">
         <video autoplay loop muted>
             <source src="{{ asset('uploads/background_video6.mp4') }}" type="video/mp4">
-            <!-- Add additional <source> elements for other video formats if necessary -->
         </video>
-        <!-- <div class="video-overlay"></div> -->
     </div>
     <div class="home-content">
-        <!-- <h1>Join the fastest growing book club</h1> -->
-        <h1><b>{{ __('Login') }}</b> {{ __('and get lost in the literary') }}<br> {{ __('wonders') }} 🔮 </h1> <!-- {{ __('')}} -->
-
-        <!-- <p>Become a member and <b>register</b> or <b>log in</b> if you already have an account</p> -->
-
+        <h1><b>{{ __('Login') }}</b> {{ __('and get lost in the literary') }}<br> {{ __('wonders') }} 🔮 </h1>
 
         <div class="login-container">
             <div class="mt-2">

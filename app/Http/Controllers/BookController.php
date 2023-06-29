@@ -44,13 +44,13 @@ class BookController extends Controller
         $genres = Genre::all();
 
         $book = new Book;
-        $book->name = $request->input('name');
-        $book->author = $request->input('author');
-        $book->release_year = $request->input('release_year');
-        $book->description = $request->input('description');
-        $book->page_count = $request->input('page_count');
-        $book->language = $request->input('language');
-        $book->genre_id = $request->input('genre');
+        $book->name = htmlspecialchars($request->input('name'));
+        $book->author = htmlspecialchars($request->input('author'));
+        $book->release_year = htmlspecialchars($request->input('release_year'));
+        $book->description = htmlspecialchars($request->input('description'));
+        $book->page_count = htmlspecialchars($request->input('page_count'));
+        $book->language = htmlspecialchars($request->input('language'));
+        $book->genre_id = htmlspecialchars($request->input('genre'));
 
         $uploadedImage = $request->file('photo');
 
@@ -58,7 +58,7 @@ class BookController extends Controller
             // Generate a unique filename
             $filename = uniqid() . '.' . $uploadedImage->getClientOriginalExtension();
 
-            // Store the image in the desired location
+            // Store the image
             $uploadedImage->storeAs('storage/uploads/', $filename, 'public');
 
             // Save the image filename in the book record
@@ -82,13 +82,13 @@ class BookController extends Controller
     public function update(Request $request, $id)
     {
         $book = Book::findOrFail($id);
-        $book->name = $request->input('name');
-        $book->author = $request->input('author');
-        $book->release_year = $request->input('release_year');
-        $book->description = $request->input('description');
-        $book->page_count = $request->input('page_count');
-        $book->language = $request->input('language');
-        $book->genre_id = $request->input('genre');
+        $book->name = htmlspecialchars($request->input('name'));
+        $book->author = htmlspecialchars($request->input('author'));
+        $book->release_year = htmlspecialchars($request->input('release_year'));
+        $book->description = htmlspecialchars($request->input('description'));
+        $book->page_count = htmlspecialchars($request->input('page_count'));
+        $book->language = htmlspecialchars($request->input('language'));
+        $book->genre_id = htmlspecialchars($request->input('genre'));
 
         if ($request->hasFile('photo')) {
             $uploadedImage = $request->file('photo');
@@ -96,7 +96,7 @@ class BookController extends Controller
             // Generate a unique filename
             $filename = uniqid() . '.' . $uploadedImage->getClientOriginalExtension();
 
-            // Store the image in the desired location
+            // Store the image
             $uploadedImage->storeAs('storage/uploads/', $filename, 'public');
 
             // Save the image filename in the book record
@@ -124,9 +124,9 @@ class BookController extends Controller
         $review->user_id = Auth::id();
         $review->book_id = $book;
 
-        $review->rating = $validatedData['rating'];
-        $review->title = $validatedData['title'];
-        $review->content = $validatedData['content'];
+        $review->rating = htmlspecialchars($validatedData['rating']);
+        $review->title = htmlspecialchars($validatedData['title']);
+        $review->content = htmlspecialchars($validatedData['content']);
 
         // Associate the review with the book
         $book->reviews()->save($review);
@@ -135,25 +135,9 @@ class BookController extends Controller
         return redirect()->back()->with('success', 'Review added successfully.');
     }
 
-
-
-
-    public function search(Request $request)
-    {
-        $search = $request->input('search');
-
-        // Perform a database query to fetch matching book variants
-        $matchingBookVariants = Book::where('name', 'like', "%$search%")->get();
-
-        return response()->json($matchingBookVariants);
-    }
-
-
     public function destroy($id)
     {
         $book = Book::findOrFail($id);
-
-        // Delete the book
         $book->delete();
 
         return redirect()->route('books.index')->with('success', 'Book deleted successfully');

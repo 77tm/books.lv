@@ -12,7 +12,6 @@
 </head>
 
 <body class="books-body">
-
     @if (count($books) == 0)
     <p class='error'>{{ __('There are no records in the database!') }}</p>
     @else
@@ -57,8 +56,6 @@
             <button type="submit" class="btn btn-dark">{{ __('Search') }}</button>
         </form>
     </div>
-
-
 </body>
 
 </html>

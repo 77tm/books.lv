@@ -37,8 +37,8 @@ class ReviewController extends Controller
         $review->user_id = Auth::id();
         $review->book_id = $request->book_id;
         $review->rating = $request->rating;
-        $review->title = $request->title;
-        $review->content = $request->content;
+        $review->title = htmlspecialchars($request->title);
+        $review->content = htmlspecialchars($request->content);
         $review->save();
 
         $reviews = Review::all();
@@ -49,15 +49,12 @@ class ReviewController extends Controller
     public function edit($id)
     {
         $review = Review::findOrFail($id);
-
-
         return view('review_edit')->with('review', $review);
     }
 
 
     public function update(Request $request, $id)
     {
-        // Validate the form data
         $validatedData = $request->validate([
             'rating' => 'required|integer|min:1|max:5',
             'title' => 'required|string|max:255',
@@ -69,17 +66,13 @@ class ReviewController extends Controller
 
         // Update the review with the new data
         $review->rating = $validatedData['rating'];
-        $review->title = $validatedData['title'];
-        $review->content = $validatedData['content'];
+        $review->title = htmlspecialchars($validatedData['title']);
+        $review->content = htmlspecialchars($validatedData['content']);
         $review->save();
 
         $reviews = Review::all();
         return view('reviews', compact('reviews'));
     }
-
-
-
-
 
     public function destroy($id)
     {
