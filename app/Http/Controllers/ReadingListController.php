@@ -99,18 +99,15 @@ class ReadingListController extends Controller
             'description' => 'required',
         ]);
 
-
         $readingList = new ReadingList();
         $readingList->user_id = Auth::id();
 
         $readingList->name = htmlspecialchars($validatedData['name']);
         $readingList->description = htmlspecialchars($validatedData['description']);
-        // You may need to set the user ID or any other relevant fields here
 
         // Save the reading list
         $readingList->save();
 
-        // Optionally, you can redirect the user to the reading list show page
         return redirect()->route('reading_lists.show', $readingList->id);
     }
 
@@ -121,23 +118,6 @@ class ReadingListController extends Controller
     {
         $readingList = ReadingList::with('books')->findOrFail($readingListId);
         return view('reading_list_show', compact('readingList'));
-    }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
     }
 
     /**

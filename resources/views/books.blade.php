@@ -8,7 +8,6 @@
 <head>
     <meta charset="UTF-8">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <!-- <script src="{{ asset('js/search-books.js') }}"></script> -->
 </head>
 
 <body class="books-body">

@@ -130,10 +130,6 @@ Route::get('/reviews/{id}/edit', [ReviewController::class, 'edit'])->name('revie
 
 Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
 
-Route::get('/admin', function () {
-    return 'Welcome, Admin!';
-})->middleware('role');
-
 Route::get('/admin/users', [UserController::class, 'index'])->middleware('role')->name('admin.users');
 Route::delete('/admin/users/{user}', [UserController::class, 'deleteUser'])->middleware('role')->name('admin.users.delete');
 Route::post('/admin/users/{user}/make-admin', [UserController::class, 'makeAdmin'])->middleware('role')->name('admin.users.makeAdmin');

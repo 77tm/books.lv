@@ -109,7 +109,6 @@ class BookController extends Controller
 
     public function addReview(Request $request, $id)
     {
-        // Validate the form data
         $validatedData = $request->validate([
             'rating' => 'required|integer|min:1|max:5',
             'title' => 'required|string|max:255',

@@ -52,17 +52,25 @@
                 </ul>
 
                 <!-- Language Switcher -->
+
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
+                        @auth
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Language
+                            🌍
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        @else
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Language 🌍
+                        </a>
+                        @endauth
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="{{ route('lang.switch', 'en') }}"><span>🇺🇸</span> English</a>
                             <a class="dropdown-item" href="{{ route('lang.switch', 'lv') }}"><span>🇱🇻</span> Latviešu</a>
                         </div>
                     </li>
                 </ul>
+
 
                 <!-- Dropdown profilam -->
                 @auth
