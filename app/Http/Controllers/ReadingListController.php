@@ -45,19 +45,14 @@ class ReadingListController extends Controller
 
     public function createBook(ReadingList $readingList)
     {
-        if ($readingList->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized');
-        }
+
         $books = Book::all();
         return view('books_add_list', compact('readingList', 'books'));
     }
 
     public function storeBook(Request $request, ReadingList $readingList)
     {
-        // Check if the authenticated user owns the reading list
-        if ($readingList->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized');
-        }
+
 
         // Validate the request data
         $request->validate([

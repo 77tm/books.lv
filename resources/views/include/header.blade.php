@@ -35,6 +35,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('reading_lists')}}">{{ __('Reading lists') }}</a>
                     </li>
+                    @if (Auth::check() && Auth::user()->role === 1)
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.users') }}">Admin Actions</a>
+                    </li>
+                    @endif
                     @else
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{route('home')}}">{{ __('Home') }}</a>

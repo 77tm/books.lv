@@ -6,6 +6,8 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ReadingListController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\UserController;
+
 use App\Models\Book;
 use App\Models\Genre;
 use Illuminate\Support\Facades\Auth;
@@ -78,8 +80,7 @@ Route::get('/reading_lists/{reading_list}', [ReadingListController::class, 'show
 
 
 
-Route::get('/reading_lists/{reading_list}/books/create', [ReadingListController::class, 'createBook'])
-    ->name('reading_list.books_add_list');
+Route::get('/reading_lists/{reading_list}/books/create', [ReadingListController::class, 'createBook'])->name('reading_list.books_add_list');
 
 Route::post('/reading_list/{reading_list}/books', [ReadingListController::class, 'storeBook'])->name('reading_list.books.store');
 
@@ -93,11 +94,11 @@ Route::match(['get', 'put'], '/books/{id}/update', function ($id) {
     $genres = Genre::all();
 
     return view('book.update', compact('book', 'genres'));
-})->name('book.update');
+})->middleware('role')->name('book.update');
 
-Route::put('/books/{id}/update', [App\Http\Controllers\BookController::class, 'update'])->name('book.update');
+Route::put('/books/{id}/update', [App\Http\Controllers\BookController::class, 'update'])->name('book.update')->middleware('role');
 
-Route::delete('/books/{id}', [App\Http\Controllers\BookController::class, 'destroy'])->name('book.delete');
+Route::delete('/books/{id}', [App\Http\Controllers\BookController::class, 'destroy'])->name('book.delete')->middleware('role');
 
 
 Route::delete('/reading_lists/{id}', [App\Http\Controllers\ReadingListController::class, 'destroy'])->name('readinglist.destroy');
@@ -128,3 +129,12 @@ Route::delete('/profile/edit/delete', [AuthManager::class, 'destroy'])->name('pr
 Route::get('/reviews/{id}/edit', [ReviewController::class, 'edit'])->name('review.edit');
 
 Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
+
+Route::get('/admin', function () {
+    return 'Welcome, Admin!';
+})->middleware('role');
+
+Route::get('/admin/users', [UserController::class, 'index'])->middleware('role')->name('admin.users');
+Route::delete('/admin/users/{user}', [UserController::class, 'deleteUser'])->middleware('role')->name('admin.users.delete');
+Route::post('/admin/users/{user}/make-admin', [UserController::class, 'makeAdmin'])->middleware('role')->name('admin.users.makeAdmin');
+Route::put('/admin/users/{user}/remove-admin', [UserController::class, 'removeAdmin'])->middleware('role')->name('admin.users.removeAdmin');

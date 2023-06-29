@@ -45,7 +45,7 @@
                     <div class="review-author">by {{ $review->user->name }}</div>
                 </div>
                 <div class="review-comment">{{ $review->content }}</div>
-                @if ($review->user_id === auth()->id())
+                @if (auth()->check() && (auth()->user()->role === 1 || $review->user_id === auth()->id()))
                 <div class="buttons_show">
 
                     <a href="{{ route('review.edit', ['id' => $review->id]) }}" class="edit-review-button btn btn-dark btn-sm">{{ __('Edit') }}</a>

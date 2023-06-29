@@ -40,7 +40,7 @@
                 <div class="buttons_show">
                     <a href="{{ route('book.show', ['id' => $book->id]) }}" class="btn btn-dark">{{ __('More') }}</a>
 
-                    @if ($readingList->user_id === auth()->id())
+                    @if (auth()->check() && auth()->user()->role === 1 || $readingList->user_id === auth()->id())
                     <form method="POST" action="{{ route('readinglist.books.delete', ['readingListId' => $readingList->id, 'bookId' => $book->id]) }}" id="delete-form">
                         @csrf
                         @method('DELETE')
@@ -56,7 +56,8 @@
     <hr>
     <div class="buttons_show">
         <div class="list-btns">
-            @if ($readingList->user_id === auth()->id())
+            @if (auth()->check() && auth()->user()->role === 1 || $readingList->user_id === auth()->id())
+
             <a href="{{ route('reading_list.books_add_list', $readingList) }}" class="btn btn-success">{{ __('Add Books') }}</a>
 
             <form method="POST" action="{{ route('readinglist.destroy', ['id' => $readingList->id]) }}" id="delete-form">
